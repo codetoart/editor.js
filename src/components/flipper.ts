@@ -125,7 +125,7 @@ export default class Flipper {
    *
    * @returns {HTMLElement|null}
    */
-  public get currentItem(): HTMLElement|null {
+  public get currentItem(): HTMLElement | null {
     return this.iterator.currentItem;
   }
 
@@ -149,6 +149,22 @@ export default class Flipper {
    */
   public flipRight(): void {
     this.iterator.next();
+  }
+
+  /**
+   * Focuses previous of previous (Up in 2 column) flipper iterator item
+   */
+  public flipUp(): void {
+    this.flipLeft();
+    this.flipLeft();
+  }
+
+  /**
+   * Focuses next of next (Down in 2 column) flipper iterator item
+   */
+  public flipDown(): void {
+    this.flipRight();
+    this.flipRight();
   }
 
   /**
@@ -185,12 +201,16 @@ export default class Flipper {
         this.handleTabPress(event);
         break;
       case _.keyCodes.LEFT:
-      case _.keyCodes.UP:
         this.flipLeft();
         break;
       case _.keyCodes.RIGHT:
-      case _.keyCodes.DOWN:
         this.flipRight();
+        break;
+      case _.keyCodes.UP:
+        this.flipUp();
+        break;
+      case _.keyCodes.DOWN:
+        this.flipDown();
         break;
       case _.keyCodes.ENTER:
         this.handleEnterPress(event);
@@ -233,7 +253,7 @@ export default class Flipper {
   private handleTabPress(event: KeyboardEvent): void {
     /** this property defines leaf direction */
     const shiftKey = event.shiftKey,
-        direction = shiftKey ? DomIterator.directions.LEFT : DomIterator.directions.RIGHT;
+      direction = shiftKey ? DomIterator.directions.LEFT : DomIterator.directions.RIGHT;
 
     switch (direction) {
       case DomIterator.directions.RIGHT:

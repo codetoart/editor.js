@@ -39,7 +39,7 @@ export default class Toolbox extends Module<ToolboxNodes> {
    *
    * @returns {object.<string, string>}
    */
-  public get CSS(): {[name: string]: string} {
+  public get CSS(): { [name: string]: string } {
     return {
       toolbox: 'ce-toolbox',
       toolboxButton: 'ce-toolbox__button',
@@ -88,6 +88,15 @@ export default class Toolbox extends Module<ToolboxNodes> {
   public make(): void {
     this.nodes.toolbox = $.make('div', this.CSS.toolbox);
 
+    ///2 column structure
+    // this.nodes.toolbox.leftColumn = document.createElement('div');
+    // this.nodes.toolbox.leftColumn.classList.add('column-6');
+    // this.nodes.toolbox.leftColumn.style.borderRight = "1px solid lightgray";
+    // this.nodes.toolbox.appendChild(this.nodes.toolbox.leftColumn);
+    // this.nodes.toolbox.rightColumn = document.createElement('div');
+    // this.nodes.toolbox.rightColumn.classList.add('column-6');
+    // this.nodes.toolbox.appendChild(this.nodes.toolbox.rightColumn);
+
     this.addTools();
     this.enableFlipper();
   }
@@ -107,7 +116,7 @@ export default class Toolbox extends Module<ToolboxNodes> {
    * @param {MouseEvent|KeyboardEvent} event - event that activates toolbox button
    * @param {string} toolName - button to activate
    */
-  public toolButtonActivate(event: MouseEvent|KeyboardEvent, toolName: string): void {
+  public toolButtonActivate(event: MouseEvent | KeyboardEvent, toolName: string): void {
     const tool = this.Editor.Tools.toolsClasses[toolName] as BlockToolConstructable;
 
     this.insertNewBlock(tool, toolName);
@@ -120,7 +129,7 @@ export default class Toolbox extends Module<ToolboxNodes> {
     if (this.isEmpty) {
       return;
     }
-
+    this.Editor.Toolbar.plusButton.showAnimation();
     this.Editor.UI.nodes.wrapper.classList.add(this.CSS.openedToolbarHolderModifier);
     this.nodes.toolbox.classList.add(this.CSS.toolboxOpened);
 
@@ -132,6 +141,7 @@ export default class Toolbox extends Module<ToolboxNodes> {
    * Close Toolbox
    */
   public close(): void {
+    this.Editor.Toolbar.plusButton.hideAnimation();
     this.nodes.toolbox.classList.remove(this.CSS.toolboxOpened);
     this.Editor.UI.nodes.wrapper.classList.remove(this.CSS.openedToolbarHolderModifier);
 
@@ -205,11 +215,30 @@ export default class Toolbox extends Module<ToolboxNodes> {
       return;
     }
 
-    const button = $.make('li', [ this.CSS.toolboxButton ]);
-
+    // const button = $.make('li', [ this.CSS.toolboxButton ]);
+    const button = document.createElement('li');
+    button.classList.add('toolButton');
     button.dataset.tool = toolName;
-    button.innerHTML = (userToolboxSettings && userToolboxSettings.icon) || toolToolboxSettings.icon;
+    //button.innerHTML = //(userToolboxSettings && userToolboxSettings.icon) || toolToolboxSettings.icon
 
+    const toolIconSpan = document.createElement('span');
+    toolIconSpan.classList.add('toolIconContainer');
+    toolIconSpan.innerHTML = (userToolboxSettings && userToolboxSettings.icon) || toolToolboxSettings.icon
+    button.appendChild(toolIconSpan);
+
+    const toolNameSpan = document.createElement('span');
+    toolNameSpan.classList.add('toolNameContainer');
+    toolNameSpan.innerText = _.capitalize(toolName);
+    button.appendChild(toolNameSpan);
+
+    //add tool to appropriate column
+    // if (this.displayedToolsCount % 2 !== 0) {
+    //   $.append(this.nodes.toolbox.leftColumn, button);
+    //   this.nodes.toolbox.leftColumn.appendChild(button);
+    // } else {
+    //   $.append(this.nodes.toolbox.rightColumn, button);
+    //   this.nodes.toolbox.rightColumn.appendChild(button);
+    // }
     $.append(this.nodes.toolbox, button);
 
     this.nodes.toolbox.appendChild(button);
@@ -218,7 +247,7 @@ export default class Toolbox extends Module<ToolboxNodes> {
     /**
      * Add click listener
      */
-    this.Editor.Listeners.on(button, 'click', (event: KeyboardEvent|MouseEvent) => {
+    this.Editor.Listeners.on(button, 'click', (event: KeyboardEvent | MouseEvent) => {
       this.toolButtonActivate(event, toolName);
     });
 
