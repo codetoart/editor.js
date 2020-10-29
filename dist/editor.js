@@ -27428,6 +27428,14 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         if (toolSettings && toolSettings[this.Editor.Tools.USER_SETTINGS.SHORTCUT]) {
           this.enableShortcut(tool, toolName, toolSettings[this.Editor.Tools.USER_SETTINGS.SHORTCUT]);
         }
+        /**
+         * Enable ctrl+enter to exit
+         */
+
+
+        if (toolName === 'quote') {
+          this.enableShortcut(tool, 'paragraph', 'ctrl+enter');
+        }
         /** Increment Tools count */
 
 

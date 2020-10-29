@@ -270,6 +270,13 @@ export default class Toolbox extends Module<ToolboxNodes> {
       this.enableShortcut(tool, toolName, toolSettings[this.Editor.Tools.USER_SETTINGS.SHORTCUT]);
     }
 
+    /**
+     * Enable ctrl+enter to exit
+     */
+    if(toolName === 'quote'){
+      this.enableShortcut(tool, 'paragraph', 'ctrl+enter');
+    }
+
     /** Increment Tools count */
     this.displayedToolsCount++;
   }
