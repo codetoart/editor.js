@@ -6,6 +6,7 @@
  -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Editor.js 🤩🧦🤨 example</title>
@@ -14,6 +15,7 @@
   <script src="assets/json-preview.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
+
 <body>
   <div class="ce-example">
     <div class="ce-example__header">
@@ -62,14 +64,20 @@
    Read more in Tool's README file. For example:
    https://github.com/editor-js/header#installation
    -->
-  <script src="./tools/header/dist/bundle.js" onload="document.getElementById('hint').hidden = true"></script><!-- Header -->
+  <script src="./tools/header/dist/bundle.js" onload="document.getElementById('hint').hidden = true"></script>
+  <!-- Header -->
   <script src="./tools/simple-image/dist/bundle.js"></script><!-- Image -->
   <script src="./tools/delimiter/dist/bundle.js"></script><!-- Delimiter -->
   <script src="./tools/list/dist/bundle.js"></script><!-- List -->
   <script src="./tools/checklist/dist/bundle.js"></script><!-- Checklist -->
-  
-  <!--<script src="./tools/quote/dist/bundle.js"></script>--><!-- Quote -->
+
+  <!--<script src="./tools/quote/dist/bundle.js"></script>-->
+  <!-- Quote -->
   <script src="../node_modules/@editorjs/quote/dist/bundle.js"></script>
+
+  <!--<script src="./tools/image/dist/bundle.js"></script>-->
+  <!-- Image -->
+  <script src="../node_modules/@editorjs/image/dist/bundle.js"></script>
 
   <script src="./tools/code/dist/bundle.js"></script><!-- Code -->
   <script src="./tools/embed/dist/bundle.js"></script><!-- Embed -->
@@ -128,7 +136,16 @@
         /**
          * Or pass class directly without any configuration
          */
-        image: SimpleImage,
+        // image: SimpleImage,
+        image: {
+          class: ImageTool,
+          config: {
+            endpoints: {
+              byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
+              byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
+            }
+          }
+        },
 
         list: {
           class: List,
@@ -154,12 +171,12 @@
         warning: Warning,
 
         marker: {
-          class:  Marker,
+          class: Marker,
           shortcut: 'CMD+SHIFT+M'
         },
 
         code: {
-          class:  CodeTool,
+          class: CodeTool,
           shortcut: 'CMD+SHIFT+C'
         },
 
@@ -202,9 +219,9 @@
             }
           },
           {
-            type : 'paragraph',
-            data : {
-              text : 'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text. Source code of the page contains the example of connection and configuration.'
+            type: 'paragraph',
+            data: {
+              text: 'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text. Source code of the page contains the example of connection and configuration.'
             }
           },
           {
@@ -215,9 +232,9 @@
             }
           },
           {
-            type : 'list',
-            data : {
-              items : [
+            type: 'list',
+            data: {
+              items: [
                 'It is a block-styled editor',
                 'It returns clean data output in JSON',
                 'Designed to be extendable and pluggable with a simple API',
@@ -233,15 +250,15 @@
             }
           },
           {
-            type : 'paragraph',
-            data : {
-              text : 'Workspace in classic editors is made of a single contenteditable element, used to create different HTML markups. Editor.js <mark class=\"cdx-marker\">workspace consists of separate Blocks: paragraphs, headings, images, lists, quotes, etc</mark>. Each of them is an independent contenteditable element (or more complex structure) provided by Plugin and united by Editor\'s Core.'
+            type: 'paragraph',
+            data: {
+              text: 'Workspace in classic editors is made of a single contenteditable element, used to create different HTML markups. Editor.js <mark class=\"cdx-marker\">workspace consists of separate Blocks: paragraphs, headings, images, lists, quotes, etc</mark>. Each of them is an independent contenteditable element (or more complex structure) provided by Plugin and united by Editor\'s Core.'
             }
           },
           {
-            type : 'paragraph',
-            data : {
-              text : `There are dozens of <a href="https://github.com/editor-js">ready-to-use Blocks</a> and the <a href="https://editorjs.io/creating-a-block-tool">simple API</a> for creation any Block you need. For example, you can implement Blocks for Tweets, Instagram posts, surveys and polls, CTA-buttons and even games.`
+            type: 'paragraph',
+            data: {
+              text: `There are dozens of <a href="https://github.com/editor-js">ready-to-use Blocks</a> and the <a href="https://editorjs.io/creating-a-block-tool">simple API</a> for creation any Block you need. For example, you can implement Blocks for Tweets, Instagram posts, surveys and polls, CTA-buttons and even games.`
             }
           },
           {
@@ -252,49 +269,74 @@
             }
           },
           {
-            type : 'paragraph',
-            data : {
-              text : 'Classic WYSIWYG-editors produce raw HTML-markup with both content data and content appearance. On the contrary, Editor.js outputs JSON object with data of each Block. You can see an example below'
+            type: 'paragraph',
+            data: {
+              text: 'Classic WYSIWYG-editors produce raw HTML-markup with both content data and content appearance. On the contrary, Editor.js outputs JSON object with data of each Block. You can see an example below'
             }
           },
           {
-            type : 'paragraph',
-            data : {
-              text : `Given data can be used as you want: render with HTML for <code class="inline-code">Web clients</code>, render natively for <code class="inline-code">mobile apps</code>, create markup for <code class="inline-code">Facebook Instant Articles</code> or <code class="inline-code">Google AMP</code>, generate an <code class="inline-code">audio version</code> and so on.`
+            type: 'paragraph',
+            data: {
+              text: `Given data can be used as you want: render with HTML for <code class="inline-code">Web clients</code>, render natively for <code class="inline-code">mobile apps</code>, create markup for <code class="inline-code">Facebook Instant Articles</code> or <code class="inline-code">Google AMP</code>, generate an <code class="inline-code">audio version</code> and so on.`
             }
           },
           {
-            type : 'paragraph',
-            data : {
-              text : 'Clean data is useful to sanitize, validate and process on the backend.'
+            type: 'paragraph',
+            data: {
+              text: 'Clean data is useful to sanitize, validate and process on the backend.'
             }
           },
           {
-            type : 'delimiter',
-            data : {}
+            type: 'delimiter',
+            data: {}
           },
           {
-            type : 'paragraph',
-            data : {
-              text : 'We have been working on this project more than three years. Several large media projects help us to test and debug the Editor, to make its core more stable. At the same time we significantly improved the API. Now, it can be used to create any plugin for any task. Hope you enjoy. 😏'
+            type: 'paragraph',
+            data: {
+              text: 'We have been working on this project more than three years. Several large media projects help us to test and debug the Editor, to make its core more stable. At the same time we significantly improved the API. Now, it can be used to create any plugin for any task. Hope you enjoy. 😏'
             }
           },
           {
             type: 'image',
+            // data: {
+            //   url: 'assets/codex2x.png',
+            //   caption: '',
+            //   stretched: false,
+            //   withBorder: true,
+            //   withBackground: false,
+            // }
             data: {
-              url: 'assets/codex2x.png',
-              caption: '',
-              stretched: false,
-              withBorder: true,
+              file: {
+                url: "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg"
+                //url:"https://images.unsplash.com/photo-1543599048-ad4ff7cce513?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                //url:"https://image.shutterstock.com/image-photo/panorama-180-degrees-on-mountain-600w-1143412478.jpg"
+                //url: "https://image.shutterstock.com/image-photo/180-degree-panorama-downtown-minneapolis-600w-492658537.jpg"
+                //url:"https://picsum.photos/536/354"
+                //url:"https://picsum.photos/seed/picsum/200/300"
+                //url:"http://davidecalignano.it/project/files/medium-lightbox/demo/images/6.png"
+                //url: "http://davidecalignano.it/project/files/medium-lightbox/demo/images/1.jpg"
+                //url: "https://images.adsttc.com/media/images/5b08/b87c/f197/ccb5/4900/00bd/medium_jpg/The_S_02_filter_edit2_06.jpg?1527298139"
+
+              },
+              caption: "Tesla Car",
+              withBorder: false,
               withBackground: false,
+              stretched: false
+            },
+            config: {
+              endpoints: {
+                byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
+                byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
+              }
             }
+
           },
         ]
       },
-      onReady: function(){
+      onReady: function () {
         saveButton.click();
       },
-      onChange: function() {
+      onChange: function () {
         console.log('something changed');
       },
     });
@@ -333,4 +375,5 @@
     });
   </script>
 </body>
+
 </html>
