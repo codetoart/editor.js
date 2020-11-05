@@ -273,8 +273,46 @@ export default class Toolbox extends Module<ToolboxNodes> {
     /**
      * Enable ctrl+enter to exit
      */
-    if(toolName === 'quote'){
-      this.enableShortcut(tool, 'paragraph', 'ctrl+enter');
+    if (toolName === 'quote') {
+      //this.enableShortcut(tool, 'paragraph', 'ctrl+enter');//below code is similar as enableShortcut method
+      this.Editor.Shortcuts.add({
+        name: 'ctrl+enter',
+        handler: (event: KeyboardEvent) => {
+          event.preventDefault();
+          //this.insertNewBlock(tool, toolName);//below code similar as insertNewBlock code
+          const { BlockManager, Caret } = this.Editor;
+          const { currentBlock } = BlockManager;
+
+          const newBlock = BlockManager.insert({
+            tool: 'paragraph',
+            replace: currentBlock.isEmpty,
+          });
+
+          /**
+           * Apply callback before inserting html
+           */
+          newBlock.call(BlockToolAPI.APPEND_CALLBACK);
+
+          this.Editor.Caret.setToBlock(newBlock);
+
+          /** If new block doesn't contain inpus, insert new paragraph above */
+          if (newBlock.inputs.length === 0) {
+            if (newBlock === BlockManager.lastBlock) {
+              BlockManager.insertAtEnd();
+              Caret.setToBlock(BlockManager.lastBlock);
+            } else {
+              Caret.setToBlock(BlockManager.nextBlock);
+            }
+          }
+
+          /**
+           * close toolbar when node is changed
+           */
+          this.Editor.Toolbar.close();
+          this.Editor.Toolbar.open(false,false);
+          this.Editor.Toolbar.plusButton.show();
+        },
+      });
     }
 
     /** Increment Tools count */

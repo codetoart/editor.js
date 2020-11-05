@@ -27434,7 +27434,50 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
         if (toolName === 'quote') {
-          this.enableShortcut(tool, 'paragraph', 'ctrl+enter');
+          //this.enableShortcut(tool, 'paragraph', 'ctrl+enter');//below code is similar as enableShortcut method
+          this.Editor.Shortcuts.add({
+            name: 'ctrl+enter',
+            handler: function handler(event) {
+              event.preventDefault(); //this.insertNewBlock(tool, toolName);//below code similar as insertNewBlock code
+
+              var _this2$Editor = _this2.Editor,
+                  BlockManager = _this2$Editor.BlockManager,
+                  Caret = _this2$Editor.Caret;
+              var currentBlock = BlockManager.currentBlock;
+              var newBlock = BlockManager.insert({
+                tool: 'paragraph',
+                replace: currentBlock.isEmpty
+              });
+              /**
+               * Apply callback before inserting html
+               */
+
+              newBlock.call(_block.BlockToolAPI.APPEND_CALLBACK);
+
+              _this2.Editor.Caret.setToBlock(newBlock);
+              /** If new block doesn't contain inpus, insert new paragraph above */
+
+
+              if (newBlock.inputs.length === 0) {
+                if (newBlock === BlockManager.lastBlock) {
+                  BlockManager.insertAtEnd();
+                  Caret.setToBlock(BlockManager.lastBlock);
+                } else {
+                  Caret.setToBlock(BlockManager.nextBlock);
+                }
+              }
+              /**
+               * close toolbar when node is changed
+               */
+
+
+              _this2.Editor.Toolbar.close();
+
+              _this2.Editor.Toolbar.open(false, false);
+
+              _this2.Editor.Toolbar.plusButton.show();
+            }
+          });
         }
         /** Increment Tools count */
 
