@@ -172,8 +172,12 @@ body {
   color: rgb(247, 60, 173);
 }
 
+.ce-example h1.ce-header{
+  font-size: 40px;
+}
+
 .ce-example .ce-block:first-of-type h2.ce-header{
-  font-size: 50px;
+  font-size: 35px;
 }
 
 .ce-example h2.ce-header{

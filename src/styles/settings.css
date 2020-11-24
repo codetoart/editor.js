@@ -38,6 +38,8 @@
   &__default-zone {
     &:not(:empty){
       padding: 3px;
+      display:flex;
+      justify-content:center;/*center header tool right menu options*/
     }
   }
 
