@@ -25978,12 +25978,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     }, {
       key: "close",
       value: function close() {
-        this.nodes.wrapper.classList.remove(this.CSS.toolbarOpened);
-        /** Close components */
+        //old Code
+        // this.nodes.wrapper.classList.remove(this.CSS.toolbarOpened);
+        // /** Close components */
+        // this.blockActions.hide();
+        // this.Editor.Toolbox.close();
+        // this.Editor.BlockSettings.close();
 
-        this.blockActions.hide();
-        this.Editor.Toolbox.close();
-        this.Editor.BlockSettings.close();
+        /**Reopen it with new position */
+        this.open();
       }
       /**
        * Draws Toolbar elements

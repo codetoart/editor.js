@@ -130,7 +130,7 @@ export default class Toolbar extends Module<ToolbarNodes> {
    *
    * @returns {{hide: function(): void, show: function(): void}}
    */
-  private get blockActions(): {hide: () => void; show: () => void} {
+  private get blockActions(): { hide: () => void; show: () => void } {
     return {
       hide: (): void => {
         this.nodes.actions.classList.remove(this.CSS.actionsOpened);
@@ -243,12 +243,16 @@ export default class Toolbar extends Module<ToolbarNodes> {
    * Close the Toolbar
    */
   public close(): void {
-    this.nodes.wrapper.classList.remove(this.CSS.toolbarOpened);
+    //old Code
+    // this.nodes.wrapper.classList.remove(this.CSS.toolbarOpened);
 
-    /** Close components */
-    this.blockActions.hide();
-    this.Editor.Toolbox.close();
-    this.Editor.BlockSettings.close();
+    // /** Close components */
+    // this.blockActions.hide();
+    // this.Editor.Toolbox.close();
+    // this.Editor.BlockSettings.close();
+
+    /**Reopen it with new position */
+    this.open();
   }
 
   /**
